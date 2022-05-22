@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du compte{% endblock %}
+
+{% block body %}
+    <br><br>
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.nom) }}
+        <br>
+        {{ form_row(registrationForm.prenom) }}
+        <br>
+        {{ form_row(registrationForm.tel) }}
+        <br>
+        {{ form_row(registrationForm.numSecu) }}
+
+        <br>
+
+        <button type="submit" class="btn"> Valider les modifications </button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

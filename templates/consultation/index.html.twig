@@ -1,0 +1,181 @@
+{% extends 'base.html.twig' %} {% block title %}Hello ConsultationController!{% endblock %} {% block body %}
+<style>
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 800px;
+        width: 95%;
+        font: 18px/1.5 sans-serif;
+    }
+    
+    .example-wrapper code {
+        background: #F5F5F5;
+        padding: 2px 6px;
+    }
+    
+    .table-wrapper {
+        margin: 10px 70px 70px;
+        box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
+    }
+    
+    .fl-table {
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: normal;
+        border: none;
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 100%;
+        white-space: nowrap;
+        background-color: black;
+        color: white;
+    }
+    
+    .fl-table td,
+    .fl-table th {
+        text-align: center;
+        padding: 8px;
+    }
+    
+    .fl-table td {
+        border-right: 1px solid #810b0b;
+        font-size: 12px;
+    }
+    
+    .fl-table thead th {
+        color: #ffffff;
+        background: #810b0b;
+    }
+    
+    .fl-table thead th:nth-child(odd) {
+        color: #ffffff;
+        background: #810b0b;
+    }
+    
+    .fl-table tr:nth-child(even) {
+        color: #ffffff;
+        background: black;
+    }
+    /* Responsive */
+    
+    @media (max-width: 767px) {
+        .fl-table {
+            display: block;
+            width: 100%;
+        }
+        .table-wrapper:before {
+            content: "Scroll horizontally >";
+            display: block;
+            text-align: right;
+            font-size: 11px;
+            color: white;
+            padding: 0 0 10px;
+        }
+        .fl-table thead,
+        .fl-table tbody,
+        .fl-table thead th {
+            display: block;
+        }
+        .fl-table thead th:last-child {
+            border-bottom: none;
+        }
+        .fl-table thead {
+            float: left;
+        }
+        .fl-table tbody {
+            width: auto;
+            position: relative;
+            overflow-x: auto;
+        }
+        .fl-table td,
+        .fl-table th {
+            padding: 20px .625em .625em .625em;
+            height: 60px;
+            vertical-align: middle;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            overflow-y: auto;
+            width: 120px;
+            font-size: 13px;
+            text-overflow: ellipsis;
+        }
+        .fl-table thead th {
+            text-align: left;
+            border-bottom: 1px solid #f7f7f9;
+        }
+        .fl-table tbody tr {
+            display: table-cell;
+        }
+        .fl-table tbody tr:nth-child(odd) {
+            background: none;
+        }
+        .fl-table tr:nth-child(even) {
+            background: transparent;
+        }
+        .fl-table tr td:nth-child(odd) {
+            background: #F8F8F8;
+            border-right: 1px solid #E6E4E4;
+        }
+        .fl-table tr td:nth-child(even) {
+            border-right: 1px solid #E6E4E4;
+        }
+        .fl-table tbody td {
+            display: block;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="header">nombre de rendez-vous : {{rdv|length}}</div>
+
+<div class="info" style="overflow-x:auto;">
+
+    <div>Bienvenue sur la page de consultation des rendez vous côté patient</div>
+
+</div>
+<br>
+
+<div class="info" style="overflow-x:auto;">
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <thead>
+                <tr>
+                    <th>Id du rendez-vous</th>
+                    <th>Nom du medecin</th>
+                    <th>Raison du rendez-vous</th>
+                    <th colspan="5">Date du rendez-vous</th>
+                    <th>Etat de validation</th>
+                    <th> Annuler la validation </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for rdv in rdv %} {% if rdv.getUnPatient().getId() == app.user.getUnPatient().getId()%}
+                <tr>
+                    <td>{{rdv.id}}</td>
+                    <td>{{rdv.getUnMedecin().getNom()}}</td>
+                    <td>{{rdv.libelle}}</td>
+                    <td>{{rdv.date|date("m/d/Y")}}</td>
+                    <td>|</td>
+                    <td>{{rdv.HeureDeb|date('H:s')}}</td>
+                    <td>|</td>
+                    <td>{{rdv.HeureFin|date('H:s')}}</td>
+
+                    {% if rdv.validation == 1 %}
+                    <td>✅</td>
+                    {% else %}
+                    <td>❌</td>
+                    {% endif %}
+                    <td> <a style="color:white; text-decoration:underline;" href="{{path('annuler',{id:rdv.id})}}">annuler</a></td>
+                </tr>
+
+                {% else %}
+                <td colspan="8">Pas de rendez-vous trouvé</td>
+                {% endif %} {% endfor %}
+
+            </tbody>
+            <table />
+
+    </div>
+</div>
+
+{% endblock %}

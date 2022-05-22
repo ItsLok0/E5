@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+<style>
+ 
+
+</style>
+
+<div class="info">
+
+
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">{{ controller_name }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for unUt in listeUt %}
+                <tr>
+                    <td>{{unUt.email}}</td>
+                    <td>{% for role in unUt.roles %} {{ role }} {% endfor %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %} 

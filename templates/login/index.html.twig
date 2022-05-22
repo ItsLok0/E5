@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LoginController!{% endblock %}
+
+{% block body %}
+<style>
+   
+    .info{
+        margin-left:30%;
+        margin-top:100px;
+        
+    }
+    
+</style>
+
+
+<div class="info">
+    <form action="{{ path('login') }}" method="post">
+        <label for="username">Login:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password"/>
+
+        <input type="hidden" name="_target_path" value="{{ app.request.headers.get('referer') }}"/>
+
+        <button class="button-74" role="button" type="submit">login</button>
+    </form>
+</div>
+
+
+{% endblock %}
